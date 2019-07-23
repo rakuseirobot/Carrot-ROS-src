@@ -1,0 +1,10 @@
+<robot name="carrot">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://carrot/models/carrot-lowww.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+  </link>
+</robot>

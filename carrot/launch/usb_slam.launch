@@ -1,0 +1,31 @@
+<launch>
+  <node name="control"  pkg="carrot-py"  type="joy-test.py"></node>
+  <node name="Joyyy"  pkg="joy"  type="joy_node"></node>
+  <param name="robot_description"
+    textfile="$(find carrot)/urdf/carrot-slam.urdf" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+    type="robot_state_publisher" />
+
+  <node name="cartographer_node" pkg="cartographer_ros"
+      type="cartographer_node" args="
+          -configuration_directory $(find carrot)/conf
+          -configuration_basename carrot-test.lua"
+      output="screen">
+    <remap from="echoes" to="horizontal_laser_2d" />
+  </node>
+  <node
+     name="horizontal_laser"
+     pkg="rplidar_ros"
+     type="rplidarNode"
+     output="screen">
+     <param name="serial_port"      type="string" value="/dev/ttyUSB_lidar"/>
+     <param name="serial_baudrate"  type="int"    value="115200"/>
+     <param name="frame_id"         type="string" value="horizontal_laser_link"/>
+     <param name="inverted"         type="bool"   value="false"/>
+     <param name="angle_compensate" type="bool"   value="true"/>
+  </node>
+
+  <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+      type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
+</launch>

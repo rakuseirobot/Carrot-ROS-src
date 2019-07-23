@@ -1,0 +1,15 @@
+<launch>
+  <node
+    pkg="carrot"
+    type="wii.py"
+    name="test_harness"
+    output="screen"
+  />
+  <node
+    pkg="wiimote"
+    type="wiimote_node"
+    name="wiimote_controller"
+    output="screen"
+    required="true"
+  />
+</launch>
