@@ -6,7 +6,7 @@
     output="screen"
   />
   <node
-    pkg="carrot-py"
+    pkg="carrot_py"
     type="stm_serial.py"
     name="seriaall"
   />

@@ -103,7 +103,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-  LIBRARIES carrot-py
+  LIBRARIES carrot_py
   CATKIN_DEPENDS rospy std_msgs
   DEPENDS system_lib
 )

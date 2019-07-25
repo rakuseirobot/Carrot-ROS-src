@@ -1,8 +1,13 @@
 <launch>
   <node
     pkg="carrot"
-    type="wii_test.py"
+    type="wii_stm.py"
     name="test_harness"
+  />
+  <node
+    pkg="carrot_py"
+    type="stm_console.py"
+    name="seriaall"
     output="screen"
   />
   <node

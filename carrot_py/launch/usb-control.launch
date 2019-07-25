@@ -1,4 +1,4 @@
 <launch>
-  <node name="control"  pkg="carrot-py"  type="joy-test.py" output="screen"></node>
+  <node name="control"  pkg="carrot_py"  type="joy-test.py" output="screen"></node>
   <node name="Joyyy"  pkg="joy"  type="joy_node" output="screen"></node>
 </launch>
