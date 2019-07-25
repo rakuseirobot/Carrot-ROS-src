@@ -18,7 +18,9 @@ enable = 0
 
 def callback(data):
     global past,led0,led1,led2,led3,rum,turn,sp
-    if not (data.linear_acceleration_zeroed == past.linear_acceleration_zeroed):
+    data.linear_acceleration_zeroed.x=round(data.linear_acceleration_zeroed.x,1)
+    data.linear_acceleration_zeroed.y=round(data.linear_acceleration_zeroed.y,1)
+    if not (data.linear_acceleration_zeroed == past.linear_acceleration_zeroed) and (data.buttons[0]==True or data.buttons[1]==True):
         x=data.linear_acceleration_zeroed.x/math.sqrt(pow((data.linear_acceleration_zeroed.x),2)+pow((data.linear_acceleration_zeroed.y),2))
         y=data.linear_acceleration_zeroed.y/math.sqrt(pow((data.linear_acceleration_zeroed.x),2)+pow((data.linear_acceleration_zeroed.y),2))
         turn=180+math.degrees(math.atan2(y,x))
@@ -30,50 +32,82 @@ def callback(data):
         stm_msg.flag=3
         stm_msg.data=math.sin(math.radians(turn))*10000+10000
         stm_pub.publish(stm_msg)
+        if data.buttons[1]:
+            stm_msg.flag=2
+            stm_msg.data=20000
+            stm_pub.publish(stm_msg)
+            stm_msg.flag=1
+            stm_msg.data=10000
+            stm_pub.publish(stm_msg)
+        elif data.buttons[1]==False:
+            stm_msg.flag=2
+            stm_msg.data=10000
+            stm_pub.publish(stm_msg)
+            stm_msg.flag=1
+            stm_msg.data=10000
+            stm_pub.publish(stm_msg)
+        if data.buttons[0]:
+            stm_msg.flag=2
+            stm_msg.data=0
+            stm_pub.publish(stm_msg)
+            stm_msg.flag=1
+            stm_msg.data=10000
+            stm_pub.publish(stm_msg)
+        elif data.buttons[0]==False:
+            stm_msg.flag=2
+            stm_msg.data=10000
+            stm_pub.publish(stm_msg)
+            stm_msg.flag=1
+            stm_msg.data=10000
+            stm_pub.publish(stm_msg)
+
     if(10>turn or turn>350):
         rum.intensity=1
     else:
         rum.intensity=0
-    if data.buttons[1]==True and past.buttons[1]==False:
-        #accel
-        stm_msg.flag=1
-        stm_msg.data=20000
-        stm_pub.publish(stm_msg)
-        stm_msg.flag=2
-        stm_msg.data=10000
-        stm_pub.publish(stm_msg)
-        siita=0
-        enable=1
-    elif data.buttons[0]==True and past.buttons[0]==False:
-        #Back
-        stm_msg.flag=1
-        stm_msg.data=0
-        stm_pub.publish(stm_msg)
-        stm_msg.flag=2
-        stm_msg.data=10000
-        stm_pub.publish(stm_msg)
-        enable=1
-        siita=180
-    elif data.buttons[6]==True and past.buttons[6]==False:
+    if data.buttons[6]==True and past.buttons[6]==False:
         #Left
-        stm_msg.flag=1
+        stm_msg.flag=2
         stm_msg.data=10000
         stm_pub.publish(stm_msg)
-        stm_msg.flag=2
+        stm_msg.flag=1
         stm_msg.data=0
         stm_pub.publish(stm_msg)
         siita=270
-        pass
-    elif data.buttons[7]==True and past.buttons[7]==False:
-        #Right
+    elif data.buttons[6]==False and past.buttons[6]==True:
+        #Left
+        stm_msg.flag=2
+        stm_msg.data=10000
+        stm_pub.publish(stm_msg)
         stm_msg.flag=1
         stm_msg.data=10000
         stm_pub.publish(stm_msg)
+        siita=270
+        stm_msg.flag=3
+        stm_msg.data=10000
+        stm_pub.publish(stm_msg)
+    elif data.buttons[7]==True and past.buttons[7]==False:
+        #Right
         stm_msg.flag=2
+        stm_msg.data=10000
+        stm_pub.publish(stm_msg)
+        stm_msg.flag=1
         stm_msg.data=20000
         stm_pub.publish(stm_msg)
         siita=90
         pass
+    elif data.buttons[7]==False and past.buttons[7]==True:
+        #Right
+        stm_msg.flag=2
+        stm_msg.data=10000
+        stm_pub.publish(stm_msg)
+        stm_msg.flag=1
+        stm_msg.data=10000
+        stm_pub.publish(stm_msg)
+        siita=90
+        stm_msg.flag=3
+        stm_msg.data=10000
+        stm_pub.publish(stm_msg)
     elif data.buttons[2]==True and past.buttons[2]==False:
         if sp>=4:
             pass
@@ -120,7 +154,6 @@ def callback(data):
         enable=1
     
     pub.publish(msg)
-    print(turn)
     past=data
 
 

@@ -7,7 +7,7 @@ Header=chr(0xFF)
 i=1
 
 
-ser = serial.Serial('/dev/ttyAMA0',115200,timeout=10)
+ser = serial.Serial('/dev/ttyAMA0',921600,timeout=10)
 
 def to_Byte(data):
     high = chr(int((data>>8)&0xFF))

@@ -2,34 +2,16 @@
 import serial,time,sys,struct,threading
 import rospy
 from sensor_msgs.msg import Joy
-
-Header=chr(0xFF)
-i=1
-past=None
-
-ser = serial.Serial('/dev/ttyAMA0',921600,timeout=10)
-
-def check_diff(data):
-    pass
-
-def to_Byte(data):
-    high = chr(int((data>>8)&0xFF))
-    low = chr(int(data&0xFF))
-    return high,low
+from carrot_stm.msg import stm_carrot
 
 def send_stm(flag,data):
-    h,l=to_Byte(data)
-    try:
-        ser.write(Header+chr(flag)+h+l)
-        #ser.write(chr(flag))
-        #ser.write(h)
-        #ser.write(l)
-    except Exception as e:
-        print(e)
+    stm_msg.flag=flag
+    stm_msg.data=data
+    stm_pub.publish(stm_msg)
 
 def callback(data):
     global past
-    if past is not None:
+    if not past==None:
         if  (past.axes[0] != data.axes[0]):
             send_stm(3,int((data.axes[0]*-1)*10000+10000))
         elif  (past.axes[2] != data.axes[2]):
@@ -45,8 +27,6 @@ def callback(data):
                 send_stm(4,0b1000000000)
             else:
                 send_stm(4,0)
-        else:
-            pass
     else:
         pass
     past=data
@@ -61,6 +41,10 @@ def main():
         ser.close()
         sys.exit()
 
+
+stm_pub = rospy.Publisher('/stm', stm_carrot, queue_size=1)
+stm_msg = stm_carrot()
+past=None
 
 
 if __name__ == '__main__':
