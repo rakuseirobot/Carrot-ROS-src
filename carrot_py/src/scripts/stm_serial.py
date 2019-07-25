@@ -1,8 +1,12 @@
+#!/usr/bin/env python
+
 import serial,time,sys,struct
 import rospy
+from carrot_stm.msg import stm_carrot
 
 Header=chr(0xFF)
 i=1
+
 
 ser = serial.Serial('/dev/ttyAMA0',115200,timeout=10)
 
