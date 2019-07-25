@@ -28,7 +28,7 @@ def callback(data):
         elif turn < 315 and turn >180:
             turn = 315
         stm_msg.flag=3
-        stm_msg.data=math.cos(math.radians(turn))*10000+10000
+        stm_msg.data=math.sin(math.radians(turn))*10000+10000
         stm_pub.publish(stm_msg)
     if(10>turn or turn>350):
         rum.intensity=1
