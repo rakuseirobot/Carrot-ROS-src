@@ -35,7 +35,7 @@
   <joint name="horizontal_laser_link_joint" type="fixed">
     <parent link="base_link" />
     <child link="horizontal_laser_link" />
-    <origin xyz="-0.43 0 0.16" />
+    <origin xyz="0.43 0 0.16" rpy="0 0 3.1415926"/>
   </joint>
 
   

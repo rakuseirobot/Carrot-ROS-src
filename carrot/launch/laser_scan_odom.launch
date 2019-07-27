@@ -73,6 +73,7 @@
         <remap from="scan" to="scan_before" />
         <rosparam command="load" file="$(find carrot)/conf/laser_fil.yaml" />
         <remap from="scan_filtered" to="scan" />
+
     </node>
 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" args="/cmd_vel:=/my_robo/diff_drive_controller/cmd_vel">
@@ -82,6 +83,4 @@
         <rosparam file="$(find carrot)/param/global_costmap_params.yaml" command="load" />
         <rosparam file="$(find carrot)/param/base_local_planner_params.yaml" command="load" />
     </node>
-
-
 </launch>
