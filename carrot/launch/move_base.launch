@@ -1,6 +1,6 @@
 <launch>
-  <!--<node name="control"  pkg="carrot-py"  type="joy-test.py"></node>
-  <node name="Joyyy"  pkg="joy"  type="joy_node"></node>!-->
+  <node name="control"  pkg="carrot_py"  type="joy-test.py"></node>
+  <node name="Joyyy"  pkg="joy"  type="joy_node"></node>
 
   <param name="robot_description"
     textfile="$(find carrot)/urdf/carrot-slam.urdf" />
@@ -60,14 +60,14 @@
         <param name="update_min_a" value="0.5"/>
         <param name="global_frame_id" value="/map"/>
         <param name="base_frame_id" value="/base_link"/>
-        <param name="odom_frame_id" value="odom"/>
+        <param name="odom_frame_id" value="/odom"/>
         <param name="resample_interval" value="1"/>
         <param name="transform_tolerance" value="0.1"/>
         <param name="recovery_alpha_slow" value="0.0"/>
         <param name="recovery_alpha_fast" value="0.0"/>
     </node>
 
-    <node name="map_server" pkg="map_server" type="map_server" args="/home/carrot/lab2.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="/home/carrot/3F.yaml"/>
 
     <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
         <remap from="scan" to="scan_before" />

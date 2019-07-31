@@ -17,7 +17,7 @@ def callback(data):
         if not data.linear.y==past.linear.y:
             send_stm(1,int(data.linear.y*(-10000)+10000))
         if not data.angular.z==past.angular.z:
-            send_stm(3,int(data.angular.z*(-10000)+10000))
+            send_stm(3,int(data.angular.z*0.7*(-10000)+10000))
     else:
         pass
     past=data
