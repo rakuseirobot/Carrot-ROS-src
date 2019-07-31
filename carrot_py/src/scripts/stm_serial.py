@@ -9,7 +9,7 @@ i=1
 
 ser = serial.Serial('/dev/ttyAMA0',921600,timeout=10)
 
-def to_Byte(data):
+def to_Byte(data): #0-65535 can send
     high = chr(int((data>>8)&0xFF))
     low = chr(int(data&0xFF))
     return high,low

@@ -17,6 +17,21 @@
       output="screen">
     <remap from="echoes" to="horizontal_laser_2d" />
   </node>
+  
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+      <remap from="scan" to="scan_before" />
+      <rosparam command="load" file="$(find carrot)/conf/laser_fil.yaml" />
+      <remap from="scan_filtered" to="scan" />
+
+  </node>
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find carrot)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find carrot)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find carrot)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find carrot)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find carrot)/param/base_local_planner_params.yaml" command="load" />
+    <remap from="odom" to="odom"/>
+  </node>
   <node
      name="horizontal_laser"
      pkg="rplidar_ros"
@@ -27,6 +42,7 @@
      <param name="frame_id"         type="string" value="horizontal_laser_link"/>
      <param name="inverted"         type="bool"   value="false"/>
      <param name="angle_compensate" type="bool"   value="true"/>
+     <remap from="scan" to="scan_before" />
   </node>
 
   <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"

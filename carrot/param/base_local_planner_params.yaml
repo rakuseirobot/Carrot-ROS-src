@@ -23,7 +23,7 @@ TrajectoryPlannerROS:
   holonomic_robot: true
 
 # Forward Simulation Parameters
-  sim_time: 1
+  sim_time: 2
   vx_samples: 10
   vy_samples: 10
   vtheta_samples: 20
@@ -32,9 +32,11 @@ TrajectoryPlannerROS:
 
   pdist_scale: 3
   gdist_scale: 2
-  occdist_scale: 0.05
-
-  heading_scoring: false
+  occdist_scale: 0.01
+  
+  heading_lookahead: 0.5
+  heading_scoring: true
+  heading_scoring_timestep: 1
 
   publish_cost_grid_pc: true
 

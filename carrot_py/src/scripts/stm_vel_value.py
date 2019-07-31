@@ -10,8 +10,13 @@ def send_stm(flag,data):
     stm_pub.publish(stm_msg)
 
 def callback(data): #send_stm 0-65535
-    global past
+    """
+    x:
+    y:
+    z:
+    """
     print(data)
+    global past
     if not past == None:
         if not data.linear.x==past.linear.x:
             send_stm(2,int(data.linear.x*10000+10000))

@@ -22,7 +22,6 @@
     <origin xyz="0 0 0.14" />
   </joint>
 
-
   <link name="horizontal_laser_link">
     <visual>
       <origin xyz="0 0 0" />
